@@ -1,0 +1,23 @@
+name: Deploy GraphQL Service
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch latest schema and type definitions
+        run: node updateSchema.js  # Run script to update schema and types
+
+      - name: Build and deploy
+        run: npm run build && npm run deploy
